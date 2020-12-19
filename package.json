@@ -1,0 +1,30 @@
+{
+  "name": "oreo.js",
+  "version": "0.2.4",
+  "description": "cross-platform cookies for Electron, Cordova and Browsers",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PudreteDiablo/oreo.js.git"
+  },
+  "keywords": [
+    "cookies",
+    "browser",
+    "electron",
+    "cordova",
+    "tools"
+  ],
+  "author": "Diablo Luna <@PudreteDiablo>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PudreteDiablo/oreo.js/issues"
+  },
+  "homepage": "https://github.com/PudreteDiablo/oreo.js#readme",
+  "dependencies": {
+    "atob": "^2.1.2",
+    "btoa": "^1.2.1"
+  }
+}
