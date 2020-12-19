@@ -110,7 +110,8 @@ var fileK = "WATERMELON-CIGARETTES" ;
 var conf  = {
   cookies_limit : true ,
   cookies_size_limit : true ,
-  cookies_file  : './oreo.cookies'
+  cookies_file  : './oreo.cookies' ,
+  auto_samesite : true
 } ;
 
 /**
@@ -132,7 +133,11 @@ var conf  = {
 oreo = ( key, value, props ) => {
   if( typeof key === "undefined" ) 
     { throw new Error( 'Please define at least one parameter to use oreo method.' ) ; }
-  return typeof value === "undefined" ? oreo.get( key ) : oreo.set( key, value, props || { } ) ;
+  if( typeof value === "undefined" ) {
+    return oreo.get( key ) ;
+  } else { 
+    oreo.set( key, value, props || { } ) ; 
+  }
 } ;
 
 Object.defineProperty( oreo, 'list', {
@@ -178,6 +183,7 @@ Object.defineProperty( oreo, 'length', {
  * @property {boolean} config.cookies_limit - By security, Browsers set a limit of cookies, but this limit can't be disabled ONLY for electron and cordova. Default: true
  * @property {boolean} config.cookies_size_limit - By security, Browsers set a 4096 bytes limit per cookie value. This limit can't be disbled ONLY for electron and cordova. Default: true
  * @property {string} config.cookies_file - (Electron and Node.js Only) Change the file where encrypted cookies will be storaged. Default: "./oreo.cookies"
+ * @property {string} config.auto_samesite - (Browsers) Automatically adds "SameSite=Lax" property to cookies to avoid a warning. Default : true
  *
  * @example
  * ```js
@@ -213,18 +219,18 @@ oreo.get = ( key ) => {
   if( typeof key === "undefined" ) 
     { throw new Error( 'Please define the cookie-name as key parameter.' ) ; }
   if( typeof cache[ key ] !== "undefined" ) 
-    { return ( cache[ key ] || { } ).value || null ; }
+    { var v = ( cache[ key ] || { } ).value ; return v === undefined ? null : v ; }
   READ( ) ; // CLEAN-CACHE [<]
-  if( !cache[ key ] ) { 
+  if( cache[ key ] === null || cache[ key ] === undefined ) { 
     cache[ key ] = null ; 
     return null ;
   } else {
     var $c = cache[ key ] ;
-    if( $c . expired( ) ) {
+    if( $c . expired === true ) {
       oreo.eat( $c.key ) ;
       return null ;
     } else 
-      { return cache[ key ] ; }
+      { return $c.value ; }
   } 
 } ;
 
@@ -266,10 +272,10 @@ oreo.remove = ( key ) => {
     var dir = isElectron( ) ? require( 'electron' ).remote.app.getPath( 'appData' ) : './' ;
     fs.writeFileSync( !conf.cookies_file || conf.cookies_file === "./oreo.cookies" ? path.join( dir, conf.cookies_file ) : conf.cookies_file, enc ) ;
   } else if( isCordova( ) ) {
-    window.localStorage.setItem( `o-cookie-${ key }`, str ) ;
+    window.localStorage.removeItem( `o-cookie-${ $c.key }` ) ;
     window.localStorage.setItem( `o-cookies-index`, ix ) ;
   } else {
-    document.cookie = str ;
+    document.cookie = `${ $c.key }=; expires=Thu, 01 Jan 1970 00:00:00 UTC;` ;
     window.localStorage.setItem( `o-cookies-index`, ix ) ;
   } /* UPDATING CACHE [v] */
   return true ;
@@ -304,6 +310,8 @@ oreo.set = ( key, value, props ) => {
   if( typeof props === "undefined" ) { props = { } ; }
   if( !key.match( /^[a-zA-Z0-9\_]*$/g ) ) 
     { throw new Error( 'Invalid cookie-name. Please use simple names like: "cookiename", "cookie_name" even "CooKiE_NaMe"' ) }
+  if( conf.auto_samesite === true ) 
+    { props[ 'samesite' ] = "Lax" }
   /* FIXING VALUE [v] */
   if( value instanceof Date ) {
     value = value.toISOString( ) ;
@@ -332,7 +340,7 @@ oreo.set = ( key, value, props ) => {
     if( v instanceof Date ) {
       v = v.toUTCString( ) ;
     } /* Save Property - [v] */
-    str += `; ${ i }=${ v }` ;
+    str += `; ${ i.toLowerCase( ) }=${ v }` ;
   } /* CREATE OreoCookie [v] */
   return WRITE( str ) ;
 } ;
@@ -364,10 +372,10 @@ function WRITE( str ) {
     var dir = isElectron( ) ? require( 'electron' ).remote.app.getPath( 'appData' ) : './' ;
     fs.writeFileSync( !conf.cookies_file || conf.cookies_file === "./oreo.cookies" ? path.join( dir, conf.cookies_file ) : conf.cookies_file, enc ) ;
   } else if( isCordova( ) ) {
-    window.localStorage.removeItem( `o-cookie-${ $c.key }` ) ;
+    window.localStorage.setItem( `o-cookie-${ key }`, str ) ;
     window.localStorage.setItem( `o-cookies-index`, ix ) ;
   } else {
-    document.cookie = `${ key }=; expires=Thu, 01 Jan 1970 00:00:00 UTC;` ;
+    document.cookie = str ;
     window.localStorage.setItem( `o-cookies-index`, ix ) ;
   } /* UPDATING CACHE [v] */
   cache[ $c.key ] = $c ;
@@ -386,6 +394,7 @@ function READ( ) {
       throw new Error( 'READ_OREO_COOKIES_FILE_ERROR :: ' + ex.toString( ) ) ;
     }
   } else if( isCordova( ) ) {
+    console.log( 'fack' )
     var ix = window.localStorage.getItem( 'o-cookies-index' ) ;
     if( ix ) {
       var arr = ix.split( ',' ) ;
@@ -394,7 +403,7 @@ function READ( ) {
     } /* BACKUP INDEX [^] */
   } else {
     var str = document.cookie ,
-        arr = str.split( ';' ) ;
+        arr = str ? str.split( ';' ) : [ ] ;
     for( var i = 0 ; i < arr.length ; i++ ) {
       let a = arr[ i ].split( '=' ) ;
       obj[ a[ 0 ] ] = arr[ i ] ;
