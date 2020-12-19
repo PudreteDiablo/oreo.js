@@ -136,7 +136,7 @@ oreo = ( key, value, props ) => {
   if( typeof value === "undefined" ) {
     return oreo.get( key ) ;
   } else { 
-    oreo.set( key, value, props || { } ) ; 
+    return oreo.set( key, value, props || { } ) ; 
   }
 } ;
 
@@ -333,6 +333,12 @@ oreo.set = ( key, value, props ) => {
   } if( exp instanceof Date ) {
     props = { expires : exp.toUTCString( ) } ;
   } /* ---------------------- [v] */
+  /* ADDING EXPIRE DATE ----- [v] */
+  if( !props.expires ) {
+    var d = new Date( ) ;
+        d . setMonth( d.getMonth( ) + 1 ) ;
+    props.expires = d ;
+  } /* ---------------------- [v] */
   /* GENERATING COOKIE-STRING [v] */
   var str = `${ key }=${ value }` ;
   for( var i in props ) {
@@ -342,7 +348,8 @@ oreo.set = ( key, value, props ) => {
     } /* Save Property - [v] */
     str += `; ${ i.toLowerCase( ) }=${ v }` ;
   } /* CREATE OreoCookie [v] */
-  return WRITE( str ) ;
+  var $c = WRITE( str ) ;
+  return $c ;
 } ;
 
 
