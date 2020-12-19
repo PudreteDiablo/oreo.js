@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/PudreteDiablo/oreo.js#readme",
   "dependencies": {
+    "@ionic-native/core": "^5.30.0",
     "atob": "^2.1.2",
     "btoa": "^1.2.1"
   }

@@ -8,10 +8,10 @@
   var isElectron = ( ) => typeof window !== "undefined" && window.process && window.process.platform ? true : false ;
   var isNodejs   = ( ) => typeof module !== 'undefined' && module.exports ? true : false ;
   var isCordova  = ( ) => typeof window !== "undefined" && window.hasOwnProperty( 'cordova' ) ? true : false ;
-  var fs         = isNodejs( ) || isElectron( )  ? require( 'fs' ) : { } ;
-  var path       = isNodejs( ) || isElectron( )  ? require( 'path' ) : { } ;
-  var atob       = isNodejs( ) && !isElectron( ) ? require( 'atob' ) : window.atob ;
-  var btoa       = isNodejs( ) && !isElectron( ) ? require( 'btoa' ) : window.btoa ;
+  var fs         = ( isNodejs( ) || isElectron( ) ) && !isCordova( ) ? require( 'fs' ) : { } ;
+  var path       = ( isNodejs( ) || isElectron( ) ) && !isCordova( )  ? require( 'path' ) : { } ;
+  var atob       = isNodejs( ) && !isElectron( ) && !isCordova( ) ? require( 'atob' ) : window.atob ;
+  var btoa       = isNodejs( ) && !isElectron( ) && !isCordova( ) ? require( 'btoa' ) : window.btoa ;
 
   /* DEFINE CLASS [v] */
   /**
