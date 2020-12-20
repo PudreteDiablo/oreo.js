@@ -1,7 +1,0 @@
-{
-  "name": "ionic-oreo-test",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
