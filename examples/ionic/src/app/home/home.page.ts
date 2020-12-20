@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Oreo } from '@ionic-native/oreo/ngx' ;
+
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,13 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(public oreo: Oreo) {}
 
+  fack()  {
+    this.oreo.get( 'hola' ).then( e => {
+      alert( e ) ;
+    } ).catch( err => {
+      alert( 'ERROR_OREO => ' + err.toString( ) ) ;
+    } ) ;
+  }
 }
