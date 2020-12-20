@@ -45,7 +45,7 @@ An object with all optinal options to control the cookie behavior. Basically you
 The next defined options are available for all platforms. To check all other cookie options for browsers, just check [this mozilla article](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie).
 
 - `cookie_options` **Object**
-  - `path` **String** - Set the path access to the cookie. See [path access](/stuff) article to understand how cookie access works depending on the current *web-app* page.
+  - `path` **String** - Set the path access to the cookie. See [path access](/path-access) article to understand how cookie access works depending on the current *web-app* page.
 
 ## Example
 ```js

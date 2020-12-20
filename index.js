@@ -103,6 +103,7 @@
   var oreo  ;
   var cache = { } ;
   var ch_iz = false ;
+  var handl = [ ] ;
   var conf  = {
     cookies_limit : true ,
     cookies_size_limit : true ,
@@ -278,6 +279,7 @@
       document.cookie = `${ key }=; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=Lax` ;
       window.localStorage.setItem( `o-cookies-index`, ix ) ;
     } /* UPDATING CACHE [v] */
+    oreo.fire( 'remove', { cookie_key : key } ) ;
     return true ;
   } ;
 
@@ -353,6 +355,7 @@
       str += `; ${ i.toLowerCase( ) }=${ v }` ;
     } /* CREATE OreoCookie [v] */
     var $c = WRITE( str ) ;
+    oreo.fire( 'set', { cookie : $c , cookie_key : $c.key } ) ;
     return $c ;
   } ;
 
@@ -384,8 +387,36 @@
     } /* RETURN [v] */
     cache = { } ;
     ch_iz = false ; 
+    oreo.fire( 'clear' ) ;
     return true ;
   } ;
+
+  /**
+   * @param {!string} eventName - The name of the event.
+   * @param {!function} callback - The function to call everytime the event gets fired
+   */
+  oreo.on = ( eventName, callback ) => {
+    if( typeof eventName !== "string" ) 
+      { throw new Error( 'No eventName defined, please neter a valid one.' ) ; }
+    if( typeof callback !== "function" ) 
+      { throw new Error( 'No callback function defined. Please declare one.' ) ; }
+    var arr = handl.find( h => h.fn === callback ) ;
+    if( arr && arr.length > 0 ) { return true ; }
+    handl.push( { ev : eventName, fn : callback } ) ;
+    return true ; 
+  } ;
+
+  oreo.fire = ( eventName, data ) => {
+    var arr = handl.filter( h => h.ev === eventName ) ;
+    if( !arr || arr.length <= 0 ) { return true ; }
+    for( var i = 0 ; i < arr.length ; i++ ) {
+      try {
+        arr[ i ].fn( data || { } ) ;
+      } catch( ex ) 
+        { console.error( `Can\'t execute "${ eventName }" event callback :: ${ ex.toString( ) }` ) ; }
+    } return true ;
+  } ;
+
 
   /* FUCTIONS [v] */
   function WRITE( str ) {
