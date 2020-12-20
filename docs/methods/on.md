@@ -6,6 +6,7 @@ parent: Methods
 ---
 
 # on( eventName : string, callback : function )
+Set a event callback.
 
 ## Parameters
 - `eventName` **String** - A valid event name to invoke the defined callback once the event gets fired. Check [events section](/events) to see all available events.
