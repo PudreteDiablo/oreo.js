@@ -263,7 +263,7 @@
       Object.keys( $h ).forEach( o => arr.push( o ) ) ;
       return arr.length > 0 ? arr.join( ',' ) : '' ;
     } ( ) ) ;  
-    if( isElectron( ) || isNodejs( ) ) {
+    if( ( isNodejs( ) || isElectron( ) ) && !isCordova( ) ) {
       var obj = { } ;
       for( var i in $h ) { obj[ i ] = $h[ i ].cookie_str ; }
       var raw = JSON.stringify( obj ) ;
@@ -272,10 +272,10 @@
       var dir = isElectron( ) && rmt ? rmt.app.getPath( 'userData' ) : './' ;
       fs.writeFileSync( !conf.cookies_file || conf.cookies_file === "./oreo.cookies" ? path.join( dir, conf.cookies_file ) : conf.cookies_file, enc ) ;
     } else if( isCordova( ) ) {
-      window.localStorage.removeItem( `o-cookie-${ $c.key }` ) ;
+      window.localStorage.removeItem( `o-cookie-${ key }` ) ;
       window.localStorage.setItem( `o-cookies-index`, ix ) ;
     } else {
-      document.cookie = `${ $c.key }=; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=Lax` ;
+      document.cookie = `${ key }=; expires=Thu, 01 Jan 1970 00:00:00 UTC; samesite=Lax` ;
       window.localStorage.setItem( `o-cookies-index`, ix ) ;
     } /* UPDATING CACHE [v] */
     return true ;
@@ -360,7 +360,7 @@
    * Remove all cookies of the current domain.
    */
   oreo.clear = ( ) => {
-    if( isElectron( ) || isNodejs( ) ) {
+    if( ( isNodejs( ) || isElectron( ) ) && !isCordova( ) ) {
       var rmt = isElectron( ) ? require( 'electron' ).remote : null ;
       var dir = isElectron( ) && rmt ? rmt.app.getPath( 'userData' ) : './' ;
       var fle = !conf.cookies_file || conf.cookies_file === "./oreo.cookies" ? path.join( dir, conf.cookies_file ) : conf.cookies_file ;
@@ -406,7 +406,7 @@
       Object.keys( $h ).forEach( o => arr.push( o ) ) ;
       return arr.length > 0 ? arr.join( ',' ) : '' ;
     } ( ) ) ;
-    if( isElectron( ) || isNodejs( ) ) {
+    if( ( isNodejs( ) || isElectron( ) ) && !isCordova( ) ) {
       var obj = { } ;
       for( var i in $h ) { obj[ i ] = $h[ i ].cookie_str ; }
       var raw = JSON.stringify( obj ) ;
@@ -415,7 +415,7 @@
       var dir = isElectron( ) && rmt ? rmt.app.getPath( 'userData' ) : './' ;
       fs.writeFileSync( !conf.cookies_file || conf.cookies_file === "./oreo.cookies" ? path.join( dir, conf.cookies_file ) : conf.cookies_file, enc ) ;
     } else if( isCordova( ) ) {
-      window.localStorage.setItem( `o-cookie-${ key }`, str ) ;
+      window.localStorage.setItem( `o-cookie-${ $c.key }`, str ) ;
       window.localStorage.setItem( `o-cookies-index`, ix ) ;
     } else {
       document.cookie = str ;
@@ -427,7 +427,7 @@
 
   function READ( ) {
     var obj = { } ;
-    if( isNodejs( ) || isElectron( ) ) {
+    if( ( isNodejs( ) || isElectron( ) ) && !isCordova( ) ) {
       try {
         var rmt = isElectron( ) ? require( 'electron' ).remote : null ;
         var dir = isElectron( ) && rmt ? rmt.app.getPath( 'userData' ) : './' ;
@@ -473,7 +473,6 @@
       if( idx !== key ) { continue ; }
       if( pat . indexOf( pth ) === 0 ) { arr.push( x ) ; } 
     } arr.sort( ).reverse( ) ;
-    console.log( arr )
     return cache[ arr[ 0 ] ] ;
   }
 
