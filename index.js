@@ -138,12 +138,12 @@
 
   Object.defineProperty( oreo, 'list', {
     /**
-     * @return {OreoCookie[]} - All saved cookies.
+     * @return {cookie_str[]} - All saved cookies.
      */
     get : ( ) => {
       if( ch_iz === false ) { READ( ) ; }
       var l = [ ] ;
-      for( var i in cache ) { l.push( cache[ i ].cookie_str ) ; }
+      for( var i in cache ) { if( cache[ i ] ) { l.push( cache[ i ].cookie_str ) } ; }
       return l ;
     }
   } ) ;
@@ -155,7 +155,7 @@
     get : ( ) => {
       if( ch_iz === false ) { READ( ) ; }
       var obj = { } ;
-      for( var x in cache ) { if( cache[ x ] !== null ) { obj[ x ] = cache[ x ] ; } }
+      for( var x in cache ) { if( cache[ x ] ) { obj[ x ] = cache[ x ] ; } }
       return obj ;
     }
   } ) ;
@@ -308,7 +308,7 @@
     if( typeof value === "undefined" ) 
       { throw new Error( 'Please define a value to storage in the cookie.' ) ; }
     if( typeof props === "undefined" ) { props = { } ; }
-    if( !key.match( /^[a-zA-Z0-9\_]*$/g ) ) 
+    if( !key.match( /^[a-zA-Z0-9\_\-]*$/g ) ) 
       { throw new Error( 'Invalid cookie-name. Please use simple names like: "cookiename", "cookie_name" even "CooKiE_NaMe"' ) }
     if( conf.auto_samesite === true ) 
       { props[ 'samesite' ] = "Lax" }
