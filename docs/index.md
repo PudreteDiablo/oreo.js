@@ -9,7 +9,7 @@ permalink: /
 # Let's add Cookies to Electron and Cordova
 With oreo.js you can bring cookies to all your javascript-based apps. Make browser cookies available in other platforms like *Electron* and *Cordova*. Also, at the same time, use the package to manage your browser-app cookies.
 
-[Github Repository](http://example.com/){: .btn .btn-blue }
+[Github Repository](http://github.com/PudreteDiablo/oreo.js){: .btn .btn-blue }
 [Patreon Support](http://patreon.com/PudreteDiablo){: .btn .btn-purple }
 [Examples](http://patreon.com/PudreteDiablo){: .btn }
 
@@ -18,6 +18,7 @@ With oreo.js you can bring cookies to all your javascript-based apps. Make brows
 ## Table of Content
 - [Installation](#installation)
 - [Download Package](#download)
+- [Package Features](#features)
 - [About the Storage](#storage)
 - [Configuration](#configuration)
 - [Next Steps](#next-steps)
@@ -46,6 +47,25 @@ You can download the last version instead use a CDN or package-installer to impo
 
 [Download oreo.min.js](https://cdn.jsdelivr.net/npm/oreo.js/dist/oreo.min.js){: .btn .btn-purple }
 [Download oreo.js](https://cdn.jsdelivr.net/npm/oreo.js/dist/oreo.js){: .btn }
+
+------
+
+## Features
+Ok, so the package allows me to save cookies in multiple platforms and also can be a interesting option to save cookies in my web-pages, but, what other features does it have?
+
+| Feature               | Browsers   | Node.js | Electron | Cordova   |
+| :-------------------- | :--------: | :-----: | :------: | :-------: |
+| Formatted Values      | •          | •       | •        | •         |
+| Expiration Time       | •          | •       | •        | •         |
+| Set Path Option       | •          | •       | •        | •         |
+| Save JSON Objects     | •          | •       | •        | •         |
+| Save Javascript Dates | •          | •       | •        | •         |
+| Unlimited Cookies     |            | •       | •        | •         |
+| Cookies Size Limit    | 4096 bytes | ~       | ~        | All x 5MB |
+| Cookies Drive-File    |            | •       | •        |           |
+
+### Why Browsers and Cordova have limits?
+Oreo.js uses default *cookies-system* for WebBrowsers, and every browser sets a limit for security. About *Cordova*, the package uses **LocalStorage** because Cordova doesn't have *cookie-system* by itself, but **LocalStorage** also have limits like provide only 5MB for all values saved in that storage. 
 
 ------
 
