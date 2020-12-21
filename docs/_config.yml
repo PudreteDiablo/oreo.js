@@ -23,12 +23,13 @@ email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   cross-platform cookies package for Electron, Cordova and Browsers.
 #baseurl: "/oreo.js" # the subpath of your site, e.g. /blog
-url: "https://pudretediablo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+#url: "https://pudretediablo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: PudreteDiablo
 github_username:  PudreteDiablo
 
 # Build settings
-theme: just-the-docs
+#theme: just-the-docs
+remote_theme : pmarsceill/just-the-docs
 plugins:
   - jekyll-feed
 
