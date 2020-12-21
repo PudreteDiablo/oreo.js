@@ -1,6 +1,6 @@
 {
   "name": "oreo.js",
-  "version": "0.2.41",
+  "version": "0.2.47",
   "description": "cross-platform cookies for Electron, Cordova and Browsers",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/PudreteDiablo/oreo.js#readme",
   "dependencies": {
-    "@ionic-native/core": "^5.30.0",
     "atob": "^2.1.2",
     "btoa": "^1.2.1"
   }

@@ -53,16 +53,16 @@ You can download the last version instead use a CDN or package-installer to impo
 ## Features
 Ok, so the package allows me to save cookies in multiple platforms and also can be a interesting option to save cookies in my web-pages, but, what other features does it have?
 
-| Feature               | Browsers   | Node.js | Electron | Cordova   |
-| :-------------------- | :--------: | :-----: | :------: | :-------: |
-| Formatted Values      | •          | •       | •        | •         |
-| Expiration Time       | •          | •       | •        | •         |
-| Set Path Option       | •          | •       | •        | •         |
-| Save JSON Objects     | •          | •       | •        | •         |
-| Save Javascript Dates | •          | •       | •        | •         |
-| Unlimited Cookies     |            | •       | •        | •         |
-| Cookies Size Limit    | 4096 bytes | ~       | ~        | All x 5MB |
-| Cookies Drive-File    |            | •       | •        |           |
+| Feature               | Browsers   | Node.js | Electron | Cordova   | CLI |
+| :-------------------- | :--------: | :-----: | :------: | :-------: | :-: |
+| Formatted Values      | •          | •       | •        | •         |     |
+| Expiration Time       | •          | •       | •        | •         | •   |
+| Set Path Option       | •          | •       | •        | •         |     |
+| Save JSON Objects     | •          | •       | •        | •         | •   |
+| Save Javascript Dates | •          | •       | •        | •         | •   |
+| Unlimited Cookies     |            | •       | •        | •         | •   |
+| Cookies Size Limit    | 4096 bytes | ~       | ~        | All x 5MB | ~   |
+| Cookies Drive-File    |            | •       | •        |           | •   |
 
 ### Why Browsers and Cordova have limits?
 Oreo.js uses default *cookies-system* for WebBrowsers, and every browser sets a limit for security. About *Cordova*, the package uses **LocalStorage** because Cordova doesn't have *cookie-system* by itself, but **LocalStorage** also have limits like provide only 5MB for all values saved in that storage. 

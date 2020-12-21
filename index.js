@@ -340,14 +340,19 @@
       var d = new Date( ) ;
           d . setMonth( d.getMonth( ) + 1 ) ;
       props.expires = d ;
+    } else if( typeof props.expires === "number" ) {
+      var d = new Date( ) ;
+          d . setDate( d.getDate( ) + props.expires ) ;
+      props.expires = d ;
     } /* ---------------------- [v] */
     /* ADDING PATH CONDITION -- [v] */
-    if( typeof props.path === "string" ) {
+    if( typeof props.path === "string" && props.path.replace( /\s+/g, '' ).length > 0 ) {
       key = `${ key }@${ props.path }` ;
     } /* ---------------------- [v] */
     /* GENERATING COOKIE-STRING [v] */
     var str = `${ key }=${ value }` ;
     for( var i in props ) {
+      if( !props[ i ] ) { continue ; }
       let v= props [ i ] ;
       if( v instanceof Date ) {
         v = v.toUTCString( ) ;
@@ -502,9 +507,10 @@
       let pth = x.indexOf( '@' ) === -1 ? '/' : x.split( '@' )[ 1 ] || '/' ;
       let idx = x.indexOf( '@' ) === -1 ?  x  : x.split( '@' )[ 0 ] ;
       if( idx !== key ) { continue ; }
+      if( x.expired === true ) { oreo.remove( x.key ) ; continue ; }
       if( pat . indexOf( pth ) === 0 ) { arr.push( x ) ; } 
     } arr.sort( ).reverse( ) ;
-    return cache[ arr[ 0 ] ] ;
+    return ( cache[ arr[ 0 ] ] || { } ).value ;
   }
 
   function GET_RANDOM_STRING( length ) {

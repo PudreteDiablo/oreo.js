@@ -6,6 +6,17 @@ description: "All  oreo.js dev-notes and updates."
 permalink: /devlog
 ---
 
+# Binary Version Released ☕
+Maybe can be helpful, maybe not, I just realease the option for no-javascript developers to store cookies in desktop platforms like Windows, MacOS and Linux.
+
+# 0.2.47 (Release Bugs Fixed)
+I starting developing the binary version of the package and I found a couple bugs. With each update I found a new bug, but finally I fixed all of them:
+
+- Expire in days not working if is set as object property (fixed).
+- `get( )` returns a OreoCookie instead a value (fixed).
+- Expired cookies not removed automatically in non-browser platforms (fixed).
+- Throws an Error at undefined cookies request (fixed).
+
 # 0.2.4 (Version Release 🥳)
 The package is really stable (at least on the tested platforms).
 
