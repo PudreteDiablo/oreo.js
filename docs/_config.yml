@@ -22,7 +22,7 @@ title: oreo.js
 email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   cross-platform cookies package for Electron, Cordova and Browsers.
-baseurl: "/oreo.js" # the subpath of your site, e.g. /blog
+#baseurl: "/oreo.js" # the subpath of your site, e.g. /blog
 url: "https://pudretediablo.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: PudreteDiablo
 github_username:  PudreteDiablo
