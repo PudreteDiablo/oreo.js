@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Support the Project
-nav_order: 8
+nav_order: 9
 description: "Support this and other projects through Patreon."
 permalink: /support
 ---

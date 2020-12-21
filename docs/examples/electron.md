@@ -64,7 +64,7 @@ Now, we will add the package in our *client-side* code to be able to use it.
   <button onclick="remove( 'cookie1' )">Remove Cookie 1</button>
   <button onclick="remove( 'cookie2' )">Remove Cookie 2</button>
   <button onclick="removeAll( )">Remove All</button>
-  <script src="https://cdn.jsdelivr.net/npm/oreo.js/dist/oreo.min.js"></script>
+  <!--script src="https://cdn.jsdelivr.net/npm/oreo.js/dist/oreo.min.js"></script-->
   <script>
     // RIGHT HERE WE ARE IMPORTING OREO PACKAGE by require( ) ;
     var oreo = require( 'oreo.js' ) ;

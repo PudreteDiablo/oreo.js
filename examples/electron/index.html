@@ -6,12 +6,45 @@
   <title>Oreo.js Test</title>
 </head>
 <body>
-  Testing Oreo.js in Electron
+  <div id="result">
+    Oreo.js Testing Example
+  </div>
+  <br/>
+  <button onclick="create( 'cookie1', true )">Create Cookie 1</button>
+  <button onclick="create( 'cookie2', new Date( ) )">Create Cookie 2</button>
+  <button onclick="remove( 'cookie1' )">Remove Cookie 1</button>
+  <button onclick="remove( 'cookie2' )">Remove Cookie 2</button>
+  <button onclick="removeAll( )">Remove All</button>
+  <!--script src="https://cdn.jsdelivr.net/npm/oreo.js/dist/oreo.min.js"></script-->
+  <script>
+    // RIGHT HERE WE ARE IMPORTING OREO PACKAGE by require( ) ;
+    var oreo = require( 'oreo.js' ) ;
+    var getOreo = ( ) => oreo ;
+
+    function write( str ) {
+      document.getElementById( 'result' ).innerHTML = str ;
+    }
+
+    function create( key, val ) {
+      var oreo = getOreo( ) ;
+      var cookie = oreo( key, val ) ;
+      console.log( cookie ) ;
+      return write( `COOKIE: "${ key }" Saved! <br/> ${ JSON.stringify( oreo.list, null, 2 ) }` ) ;
+    } 
+
+    function remove( key ) {
+      var oreo = getOreo( ) ;
+      var cookie = oreo.eat( key ) ;
+      console.log( 'Cookie Deleted: ' + cookie ) ;
+      return write( `COOKIE: "${ key }" Deleted! <br/> ${ JSON.stringify( oreo.list, null, 2 ) }` ) ;
+    } 
+
+    function removeAll( ) {
+      var oreo  = getOreo( ) ;
+      var clear = oreo.clear( ) ;
+      console.log( 'Cookies Cleared: ' + clear ) ;
+      return write( `All cookies deleted! <br/> ${ JSON.stringify( oreo.list, null, 2 ) }` ) ;
+    } 
+  </script>
 </body>
-<script src="../../index.js"></script>
-<!-- Also you can import oreo by require => let oreo = require( 'oreo.js' ) ; -->
-<!-- Just don't forget to enable "nodeIntegration" property in the main.js file. -->
-<script>
-  console.log( oreo )
-</script>
 </html>

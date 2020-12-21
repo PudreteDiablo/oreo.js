@@ -8,9 +8,10 @@ parent: Methods
 # set( key : string, value : any, ?options : object )
 
 ## Parameters
-- `key` **String** - The key of the cookie to storage the value.
+- `key` **String** - The key of the cookie to storage the value. Only letters, numbers, dashes `-` and underscores `_` are allowed.
 - `value` **Any** - The value of the cookie. Only [JSON-Valid values](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/JSON) or [Javascript Dates](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Date) are valid to save in the cookies storage.
-- `options` [**cookie_options**](#cookie_options) - (Optional) Set cookie options.
+- `?options` [**cookie_options**](#cookie_options) - (Optional) Set cookie options.
+- `?expires` **Number/Date/ISOString/UTCString** - (Optional) Instead of `options` parameter to set a expiration date. If you set a number, the parameter will be interpreted as **days**.
 
 ## Returns
 - `cookie` [**OreoCookie**](/classes/oreo_cookie.html) - A object with all cookie information.
@@ -24,6 +25,14 @@ var cookie = oreo( 'my-cookie', true ) ;
 
 /* Date example [v] */
 var cookie = oreo( 'date-cookie', new Date( ) ) ;
+
+/* Expiration examples [v] */
+/* will expire in 8 days [v] */
+var cookie = oreo( 'my-cookie', 'value', 8 ) ;
+/* will expire in a year [v] */
+expiration = new Date( ) ;
+expiration = expiration.setFullYear( expiration.getFullYear( ) + 1 ) ;
+var cookie = oreo( 'my-cookie', 'value', { expires : expiration } ) ;
 
 /* Object example [v] */
 var cookie = oreo( 'json-cookie', {
@@ -45,6 +54,7 @@ An object with all optinal options to control the cookie behavior. Basically you
 The next defined options are available for all platforms. To check all other cookie options for browsers, just check [this mozilla article](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie).
 
 - `cookie_options` **Object**
+  - `expires` **Number/Date/ISOString/UTCString** - Set a expiration date for the cookie.
   - `path` **String** - Set the path access to the cookie. See [path access](/path-access) article to understand how cookie access works depending on the current *web-app* page.
 
 ## Example
