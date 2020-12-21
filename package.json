@@ -1,6 +1,6 @@
 {
   "name": "oreo.js",
-  "version": "0.2.4",
+  "version": "0.2.41",
   "description": "cross-platform cookies for Electron, Cordova and Browsers",
   "main": "index.js",
   "scripts": {
