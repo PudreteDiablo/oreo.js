@@ -11,7 +11,7 @@ parent: Methods
 - `key` **String** - The key of the cookie to storage the value. Only letters, numbers, dashes `-` and underscores `_` are allowed.
 - `value` **Any** - The value of the cookie. Only [JSON-Valid values](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/JSON) or [Javascript Dates](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Date) are valid to save in the cookies storage.
 - `?options` [**cookie_options**](#cookie_options) - (Optional) Set cookie options.
-- `?expires` **Number/Date/ISOString/UTCString** - (Optional) Instead of `options` parameter to set a expiration date. If you set a number, the parameter will be interpreted as **days**.
+- `?expires` **Number/Date/ISOString/UTCString** - (Optional) Instead of `options` parameter to set a expiration date. If you set a number, the parameter will be interpreted as **days**. Default: 30 Days
 
 ## Returns
 - `cookie` [**OreoCookie**](/classes/oreo_cookie.html) - A object with all cookie information.
@@ -54,7 +54,7 @@ An object with all optinal options to control the cookie behavior. Basically you
 The next defined options are available for all platforms. To check all other cookie options for browsers, just check [this mozilla article](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie).
 
 - `cookie_options` **Object**
-  - `expires` **Number/Date/ISOString/UTCString** - Set a expiration date for the cookie.
+  - `expires` **Number/Date/ISOString/UTCString** - Set a expiration date for the cookie. Default: 30 Days
   - `path` **String** - Set the path access to the cookie. See [path access](/path-access) article to understand how cookie access works depending on the current *web-app* page.
 
 ## Example
