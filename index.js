@@ -44,8 +44,11 @@
       } /* -------------- [^] */
       /* Processing Value [v] */
       var v = this.value ;
-      if( typeof v !== "undefined" ) {
-        if( v.match( /^\d+$/ ) ) {
+      if( typeof v === "string" ) {
+        if( v.match( /\{([^)]+)\}/g ) || v.match( /\[([^)]+)\]/g ) ) {
+          // if JSON or Array ;
+          v = JSON.parse( v ) ;
+        } else if( v.match( /^\d+$/ ) ) {
           // if Int ;
           v = parseInt( v ) ;
         } else if( v.match( /^(\d|\.)+$/ ) ) {
@@ -78,7 +81,7 @@
      */
     get expired( ) {
       var now = new Date( ) ;
-      var dte = this.expiration_date ? new Date( this.expiration_date ) : null ;
+      var dte = this.expiration_date || this.expires ? new Date( this.expiration_date || this.expires ) : null ;
       if( !dte ) 
         { return false ; }
       if( now > dte ) 
@@ -231,7 +234,9 @@
       { throw new Error( 'Please define the cookie-name as key parameter.' ) ; }
     READ( ) ; // CLEAN-CACHE [<]
     key = `${ key }@${ typeof window !== "undefined" && window.location ? ( window.location.pathname || '/' ) : '' }` ;
-    return FIND( key ) ;
+    var c = FIND( key ) ;
+    if( c ) { return c.value ; }
+    else { return undefined ; }
   } ;
 
 
@@ -340,19 +345,14 @@
       var d = new Date( ) ;
           d . setMonth( d.getMonth( ) + 1 ) ;
       props.expires = d ;
-    } else if( typeof props.expires === "number" ) {
-      var d = new Date( ) ;
-          d . setDate( d.getDate( ) + props.expires ) ;
-      props.expires = d ;
     } /* ---------------------- [v] */
     /* ADDING PATH CONDITION -- [v] */
-    if( typeof props.path === "string" && props.path.replace( /\s+/g, '' ).length > 0 ) {
+    if( typeof props.path === "string" ) {
       key = `${ key }@${ props.path }` ;
     } /* ---------------------- [v] */
     /* GENERATING COOKIE-STRING [v] */
     var str = `${ key }=${ value }` ;
     for( var i in props ) {
-      if( !props[ i ] ) { continue ; }
       let v= props [ i ] ;
       if( v instanceof Date ) {
         v = v.toUTCString( ) ;
@@ -507,10 +507,13 @@
       let pth = x.indexOf( '@' ) === -1 ? '/' : x.split( '@' )[ 1 ] || '/' ;
       let idx = x.indexOf( '@' ) === -1 ?  x  : x.split( '@' )[ 0 ] ;
       if( idx !== key ) { continue ; }
-      if( x.expired === true ) { oreo.remove( x.key ) ; continue ; }
       if( pat . indexOf( pth ) === 0 ) { arr.push( x ) ; } 
     } arr.sort( ).reverse( ) ;
-    return ( cache[ arr[ 0 ] ] || { } ).value ;
+    var c = cache[ arr[ 0 ] ] ;
+    if( c && c.expired === true ) {
+      oreo.remove( key ) ;
+      c = undefined ;
+    } return c ;
   }
 
   function GET_RANDOM_STRING( length ) {

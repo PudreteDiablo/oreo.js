@@ -44,8 +44,11 @@
       } /* -------------- [^] */
       /* Processing Value [v] */
       var v = this.value ;
-      if( typeof v !== "undefined" ) {
-        if( v.match( /^\d+$/ ) ) {
+      if( typeof v === "string" ) {
+        if( v.match( /\{([^)]+)\}/g ) || v.match( /\[([^)]+)\]/g ) ) {
+          // if JSON or Array ;
+          v = JSON.parse( v ) ;
+        } else if( v.match( /^\d+$/ ) ) {
           // if Int ;
           v = parseInt( v ) ;
         } else if( v.match( /^(\d|\.)+$/ ) ) {
@@ -78,7 +81,7 @@
      */
     get expired( ) {
       var now = new Date( ) ;
-      var dte = this.expiration_date ? new Date( this.expiration_date ) : null ;
+      var dte = this.expiration_date || this.expires ? new Date( this.expiration_date || this.expires ) : null ;
       if( !dte ) 
         { return false ; }
       if( now > dte ) 
@@ -231,7 +234,9 @@
       { throw new Error( 'Please define the cookie-name as key parameter.' ) ; }
     READ( ) ; // CLEAN-CACHE [<]
     key = `${ key }@${ typeof window !== "undefined" && window.location ? ( window.location.pathname || '/' ) : '' }` ;
-    return FIND( key ) ;
+    var c = FIND( key ) ;
+    if( c ) { return c.value ; }
+    else { return undefined ; }
   } ;
 
 
@@ -504,7 +509,11 @@
       if( idx !== key ) { continue ; }
       if( pat . indexOf( pth ) === 0 ) { arr.push( x ) ; } 
     } arr.sort( ).reverse( ) ;
-    return cache[ arr[ 0 ] ] ;
+    var c = cache[ arr[ 0 ] ] ;
+    if( c && c.expired === true ) {
+      oreo.remove( key ) ;
+      c = undefined ;
+    } return c ;
   }
 
   function GET_RANDOM_STRING( length ) {

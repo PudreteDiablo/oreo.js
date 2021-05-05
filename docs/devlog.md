@@ -6,6 +6,11 @@ description: "All  oreo.js dev-notes and updates."
 permalink: /devlog
 ---
 
+# 0.3.2 (Value-Types and Auto-Remove Bugs Fixed)
+When you requested an expired cookie, it was not deleted in cordova and electron, but this was fixed in this last version. Also, the value returned was always the cookie-object with all its information, but it was changed so that you get the value directly.
+
+JSON and Array cookies are now also automatically converted on request.
+
 # Binary Version Released ☕
 Maybe can be helpful, maybe not, I just realease the option for no-javascript developers to store cookies in desktop platforms like Windows, MacOS and Linux.
 
