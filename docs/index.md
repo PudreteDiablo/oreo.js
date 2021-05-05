@@ -34,7 +34,7 @@ This package can be installed in different ways depending of the current develop
 ### script-tag (Browsers, Cordova & Electron)
 ```html
 <script src="oreo.min.js"/></script>
-<script src="https://cdn.jsdelivr.net/npm/oreo.js/dist/oreo.min.js"/></script>
+<script src="https://cdn.jsdelivr.net/npm/cordova-plugin-oreo@0.3.2/www/oreo.js"/></script>
 ```
 
 ### cordova-plugin (Cordova)

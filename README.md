@@ -18,7 +18,7 @@ npm i oreo.js --save
 
 #### Browser CDN
 ```
-https://cdn.jsdelivr.net/npm/oreo.js/dist/oreo.min.js
+https://cdn.jsdelivr.net/npm/cordova-plugin-oreo@0.3.2/www/oreo.js
 ```
 
 ### Cordova
